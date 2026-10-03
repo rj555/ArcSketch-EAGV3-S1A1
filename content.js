@@ -57,7 +57,12 @@ if (window.__markingToolLoaded) {
     let historyStep = -1;
 
     function initializeTool() {
-      if (document.getElementById('marking-tool-canvas')) return;
+      if (canvas) return;
+
+      // Remove UI left behind by a previous instance of this script (e.g. after the
+      // extension is reloaded, the old script is orphaned but its DOM stays on the page)
+      ['marking-tool-canvas', 'marking-tool-toolbar', 'marking-tool-text-input', 'marking-tool-modal']
+        .forEach(id => document.getElementById(id)?.remove());
 
       // Create Canvas
       canvas = document.createElement('canvas');
